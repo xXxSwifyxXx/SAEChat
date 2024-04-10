@@ -1,5 +1,6 @@
 window.onload = function() {
     var form = document.getElementById('login-form');
+    var registerButton = document.getElementById('register-button');
 
     form.addEventListener('submit', function(e) {
         e.preventDefault();
@@ -23,5 +24,10 @@ window.onload = function() {
                     alert('Login failed');
                 }
             });
+    });
+
+    registerButton.addEventListener('click', function(e) {
+        // Redirect to the registration page
+        window.location.href = '/register.html';
     });
 };
