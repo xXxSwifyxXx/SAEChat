@@ -2,34 +2,52 @@
 <html>
 <head>
   <title>Chat avec Socket.IO</title>
+<!--  <link rel="stylesheet" type="text/css" href="/css/styles.css">-->
   <script src="/socket.io/socket.io.js"></script>
   <script>
     var socket = io();
+
     window.onload = function() {
       var form = document.getElementById('form');
       var input = document.getElementById('input');
-      
+
+      // Gestion de l'envoi de messages
       form.addEventListener('submit', function(e) {
         e.preventDefault();
         if (input.value) {
-          socket.emit('message', input.value);
+          // Remplacer 'Anonyme' par le nom d'utilisateur réel si disponible
+          socket.emit('message', { username: 'Anonyme', message: input.value });
           input.value = '';
         }
       });
 
+      // Gestion de la réception des messages
       socket.on('message', function(msg) {
-        var item = document.createElement('li');
-        item.textContent = msg;
-        document.getElementById('messages').appendChild(item);
+        // Utilisez la fonction 'addMessageToDOM'
+        addMessageToDOM(msg);
         window.scrollTo(0, document.body.scrollHeight);
       });
+
+      // Charger l'historique des messages
+      socket.on('load all messages', function(messages) {
+        messages.forEach(addMessageToDOM);
+      });
     };
+
+    // Fonction pour ajouter un message au DOM
+    function addMessageToDOM(message) {
+      var chatHistory = document.getElementById('messages');
+      var messageElement = document.createElement('li');
+      messageElement.textContent = `${message.username}: ${message.message}`;
+      chatHistory.appendChild(messageElement);
+    }
+
   </script>
 </head>
 <body>
-  <ul id="messages"></ul>
-  <form id="form" action="">
-    <input id="input" autocomplete="off" /><button>Envoyer</button>
-  </form>
+<ul id="messages"></ul>
+<form id="form" action="">
+  <input id="input" autocomplete="off" /><button>Envoyer</button>
+</form>
 </body>
 </html>
