@@ -14,6 +14,9 @@ app.get('/', (req, res) => {
   // Modifiez cette ligne pour envoyer le fichier index.html
   res.sendFile(__dirname + '/public/index.html');
 });
+app.get('/zub', (req, res) => {
+  res.send('<h1>chibrax !</h1>');
+});
 
 io.on('connection', (socket) => {
   console.log('Un utilisateur s\'est connecté');
