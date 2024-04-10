@@ -12,6 +12,9 @@ const io = socketIo(server);
 app.get('/', (req, res) => {
   res.send('<h1>Bienvenue sur mon chat !</h1>');
 });
+app.get('/zub', (req, res) => {
+  res.send('<h1>chibrax !</h1>');
+});
 
 // Handle Socket.IO events
 io.on('connection', (socket) => {
